@@ -1,10 +1,14 @@
+import {Navbar} from './components/Navbar/Navbar.tsx';
+import {Hero} from './components/Hero/Hero.tsx';
+
 export const App = () => {
 
-  return (
-    <>
-     <h1>hello</h1>
-    </>
-  )
-}
+    return (
+        <>
+            <Navbar/>
+            <Hero/>
+        </>
+    );
+};
 
 
