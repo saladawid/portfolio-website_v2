@@ -1,17 +1,11 @@
 import {useRef, useState} from 'react';
-import './Navbar.css';
+import {ButtonConnect} from '../ButtonConnect/ButtonConnect.tsx';
+import styles from './Navbar.module.css';
 import logo from '../../assets/logo.png';
-import AnchorLink from 'react-anchor-link-smooth-scroll';
-import underline from '../../assets/underline.svg';
-import menuOpen from '../../assets/open_menu.png';
-import menuClose from '../../assets/close_menu.png';
-
-const menuItems = [
-    {label: 'Home', href: '#home'},
-    {label: 'About', href: '#about'},
-    {label: 'Projects', href: '#projects'},
-    {label: 'Contact', href: '#contact'},
-];
+import {CiMenuBurger as OpenMenu} from 'react-icons/ci';
+import {AiOutlineClose as CloseMenu} from 'react-icons/ai';
+import {MENU_LABELS} from '../../data/menuLabels.ts';
+import {MenuItem} from '../MenuItems/MenuItem.tsx';
 
 export const Navbar = () => {
 
@@ -28,26 +22,22 @@ export const Navbar = () => {
     };
 
     return (
-        <div className="navbar">
-            <img src={logo} alt="logo" width="120px"/>
-            <img src={menuOpen} alt="image-open" className="navbar-image-open" onClick={toggleMenu}/>
-            <ul ref={menuRef} className="navbar-menu">
-                <img src={menuClose} alt="image-close" className="navbar-image-close" onClick={toggleMenu}/>
-                {menuItems.map(menuItem => (
-                    <li key={menuItem.href}>
-                        <AnchorLink className="anchor-link" href={menuItem.href} offset={50}>
-                            <p onClick={() => setActiveMenu(menuItem.label)}>{menuItem.label}</p>
-                            {activeMenu === menuItem.label ?
-                                <img src={underline} alt="image-underline" width="60px"/> : null}
-                        </AnchorLink>
+        <div className={styles.navbarContainer}>
+            <img src={logo} alt="logo" className={styles.logoImage}/>
+            <OpenMenu className={styles.menuOpenIcon} onClick={toggleMenu}/>
+            <ul ref={menuRef} className={styles.menuList}>
+                <CloseMenu className={styles.menuCloseIcon} onClick={toggleMenu}/>
+                {MENU_LABELS.map((menuLabel) => (
+                    <li key={menuLabel.href}>
+                        <MenuItem
+                            href={menuLabel.href}
+                            label={menuLabel.label}
+                            activeMenu={activeMenu}
+                            setActiveMenu={setActiveMenu}/>
                     </li>
                 ))}
             </ul>
-            <div className="navbar-connect">
-                <AnchorLink className="anchor-link" offset={10} href="#contact">
-                    Connect with me
-                </AnchorLink>
-            </div>
+            <ButtonConnect href={'#contact'} label={'Contact with me'}/>
         </div>
     );
 };
